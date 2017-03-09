@@ -4,8 +4,8 @@ info:
   title: My Music API
   description: |
     Esta API retorna uma lista de músicas e de _playlists_ criadas por usuários.
-#host: mah-music-api.herokuapp.com
-host: localhost:8080
+host: mah-music-api.herokuapp.com
+#host: localhost:8080
 basePath: /
 schemes:
   - http
