@@ -1,0 +1,151 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: My Music API
+  description: |
+    Esta API retorna uma lista de músicas e de _playlists_ criadas por usuários.
+#host: mah-music-api.herokuapp.com
+host: localhost:8080
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+  - text/xml
+produces:
+  - application/json
+  - text/html
+paths:
+  /songs:
+    get:
+      responses:
+        200:
+          description: Lista todas as músicas cadastradas
+          schema:
+            title: Songs
+            type: array
+            items:
+              $ref: '#/definitions/Song'
+  /playlists:
+    get:
+      description: Retorna todas as _playlists_
+      responses:
+        200:
+          description: Retorna um _array_ de todas as _playlists_ do banco de dados
+          schema:
+            title: Playlist
+            type: array
+            items:
+              $ref: '#/definitions/Playlist'
+    post:
+      description: Cria uma nova _playlist_
+      parameters:
+        - in: body
+          name: playlist
+          schema:
+            $ref: '#/definitions/Playlist'
+      responses:
+        200:
+          description: Operação realizada com sucesso
+          schema:
+            $ref: '#/definitions/Playlist'
+  /playlists/{playlist_id}:
+    get:
+      description: Retorna os detalhes de uma _playlist_
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Operação realizada com sucesso
+        404:
+          description: _Playlist_ não encontrada
+    delete:
+      description: Exclui uma _playlist_
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Operação realizada com sucesso
+        404:
+          description: _Playlist_ não encontrada
+  /playlists/{playlist_id}/songs/{song_id}:
+    post:
+      description: Adiciona a música especificada à _playlist_ especificada
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          type: string
+        - in: path
+          name: song_id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Operação realizada com sucesso
+        404:
+          description: _Playlist_ ou música não encontrada
+    delete:
+      description: Remove a música especificada da _playlist_ especificada
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          type: string
+        - in: path
+          name: song_id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Operação realizada com sucesso
+        404:
+          description: _Playlist_ ou música não encontrada
+
+
+
+
+
+definitions:
+  Song:
+    type: object
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      album:
+        type: string
+      artist:
+        type: string
+      albumArtURL:
+        type: string
+  Playlist:
+    type: object
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      creator:
+        $ref: '#/definitions/User'
+      songs:
+        type: array
+        items:
+          $ref: '#/definitions/Song'
+  User:
+    type: object
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
