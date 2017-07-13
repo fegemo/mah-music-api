@@ -8,7 +8,7 @@
     "start": "node index.js"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8.1.4"
   },
   "author": "Flavio Coutinho <fegemo@gmail.com>",
   "dependencies": {
